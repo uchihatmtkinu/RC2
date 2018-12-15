@@ -229,7 +229,7 @@ func StartServer(ID int) {
 		case "QTB":
 			go HandleQTB(request)
 		default:
-			fmt.Println("Unknown command!")
+			fmt.Println("Unknown command!: ", command)
 		}
 
 	}
