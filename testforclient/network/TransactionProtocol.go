@@ -226,6 +226,7 @@ func SendTxList(data []byte, level uint32) {
 		data2 := new([]byte)
 		tmp.Encode(data2)
 		xx := shard.ShardToGlobal[CacheDbRef.ShardNum][dest]
+		fmt.Println(time.Now(), CacheDbRef.ID, "Sends Txlist to ", xx)
 		sendTxMessage(shard.GlobalGroupMems[xx].Address, "TxList", *data2)
 	}
 	/*for i := uint32(0); i < gVar.ShardSize; i++ {
@@ -252,6 +253,7 @@ func SendTxDecSetInShard(data []byte, round uint32, level uint32) {
 		data2 := new([]byte)
 		tmp.Encode(data2)
 		xx := shard.ShardToGlobal[CacheDbRef.ShardNum][dest]
+		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxDecSet to ", xx)
 		sendTxMessage(shard.GlobalGroupMems[xx].Address, "TxDecSetM", *data2)
 	}
 	/*for i := uint32(0); i < gVar.ShardSize; i++ {
@@ -312,6 +314,7 @@ func SendTxBlock(data *[]byte, kind int, level uint32) {
 		data2 := new([]byte)
 		tmp.Encode(data2, kind)
 		xx := shard.ShardToGlobal[CacheDbRef.ShardNum][dest]
+		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxB to ", xx)
 		sendTxMessage(shard.GlobalGroupMems[xx].Address, "TxB", *data2)
 	}
 	/*for i := uint32(0); i < gVar.ShardSize; i++ {

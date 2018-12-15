@@ -65,7 +65,7 @@ func QueryTL(round uint32) {
 	tmpdata := QTL{CacheDbRef.ID, round}
 	tmp := tmpdata.Encode()
 
-	sendTxMessage(shard.GlobalGroupMems[ran].Address, "QueryTL", tmp)
+	sendTxMessage(shard.GlobalGroupMems[ran].Address, "QTL", tmp)
 }
 
 //HandleQTL is handle
@@ -136,7 +136,7 @@ func QueryTDS(round uint32) {
 	}
 	tmpdata := QTDS{CacheDbRef.ID, round}
 	tmp := tmpdata.Encode()
-	sendTxMessage(shard.GlobalGroupMems[ran].Address, "QueryTDS", tmp)
+	sendTxMessage(shard.GlobalGroupMems[ran].Address, "QTDS", tmp)
 }
 
 //QueryTB queries the txdecset
@@ -147,7 +147,7 @@ func QueryTB(round uint32) {
 	}
 	tmpdata := QTB{CacheDbRef.ID, round}
 	tmp := tmpdata.Encode()
-	sendTxMessage(shard.GlobalGroupMems[ran].Address, "QueryTB", tmp)
+	sendTxMessage(shard.GlobalGroupMems[ran].Address, "QTB", tmp)
 }
 
 //HandleTx when receives a tx
