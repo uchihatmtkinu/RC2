@@ -89,11 +89,12 @@ func main() {
 
 		gVar.T1 = time.Now()
 		fmt.Println("This time", time.Now())
-		minute := 20
+		minute := 13
 		now := time.Now()
 		next := now.Add(0)
 		next = time.Date(next.Year(), next.Month(), next.Day(), next.Hour(), minute, 0, 0, next.Location())
 		tt := time.NewTimer(next.Sub(now))
+		fmt.Println(next)
 		<-tt.C
 		go network.RepGossipLoop(&shard.GlobalGroupMems, minute+1)
 		if shard.MyMenShard.Role == shard.RoleLeader {
@@ -120,6 +121,7 @@ func main() {
 
 		//test sync
 		//network.SyncProcess(&shard.GlobalGroupMems)
+		<-network.CheckChan
 		fmt.Println(time.Now(), "Epoch", k, "finished")
 	}
 	fmt.Println("Time: ", time.Since(timestart), "TPS:", float64(uint32(totalepoch)*(1+gVar.NumTxListPerEpoch*(gVar.ShardSize-1))*gVar.NumOfTxForTest)/time.Since(timestart).Seconds())

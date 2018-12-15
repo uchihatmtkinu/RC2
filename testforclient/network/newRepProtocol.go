@@ -21,7 +21,7 @@ func RepGossipLoop(ms *[]shard.MemShard, minute int) {
 		go NewRepProcess(ms, i)
 		time.Sleep(time.Second * 60)
 	}
-	fmt.Println("Rep Donw")
+	fmt.Println("Rep Done")
 	//startSync <- true
 }
 

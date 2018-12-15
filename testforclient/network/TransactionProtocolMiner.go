@@ -51,6 +51,9 @@ func HandleTxLoopMiner(round uint32) {
 		CacheDbRef.Mu.Unlock()
 		time.Sleep(time.Second)
 	}
+	if round == gVar.NumTxListPerEpoch {
+		CheckChan <- true
+	}
 }
 
 //QueryTL queries the txdecset

@@ -93,7 +93,6 @@ func TxListProcess() {
 	CacheDbRef.TDSCache[thisround] = &TLG.TDS[0]
 	go SendTxDecSet(*data2, thisround-CacheDbRef.PrevHeight, gVar.GossipRound)
 	go TxNormalBlock(thisround - CacheDbRef.PrevHeight)
-
 	CacheDbRef.Release(TLG)
 
 	CacheDbRef.TDSCnt[CacheDbRef.ShardNum]++
@@ -110,6 +109,9 @@ func TxListProcess() {
 	}
 	if tmpflag {
 		StartLastTxBlock <- CurrentEpoch
+	}
+	if thisround == gVar.NumTxListPerEpoch {
+		CheckChan <- true
 	}
 }
 
