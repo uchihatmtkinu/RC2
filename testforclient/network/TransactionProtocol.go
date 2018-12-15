@@ -56,6 +56,7 @@ func TxListProcess() {
 	data1 := new([]byte)
 	thisround := TLG.TLS[CacheDbRef.ShardNum].Round
 	TLG.TLS[CacheDbRef.ShardNum].Encode(data1)
+	CacheDbRef.TLCheck[thisround] = true
 	CacheDbRef.TLSCache[thisround] = &TLG.TLS[CacheDbRef.ShardNum]
 	go SendTxList(*data1, gVar.GossipRound)
 	CacheDbRef.NewTxList()
@@ -91,6 +92,8 @@ func TxListProcess() {
 		TLG.TDS[i].Encode(&(*data2)[i])
 	}
 	CacheDbRef.TDSCache[thisround] = &TLG.TDS[0]
+	CacheDbRef.TDSCheck[thisround] = true
+	CacheDbRef.TBCheck[thisround] = true
 	go SendTxDecSet(*data2, thisround-CacheDbRef.PrevHeight, gVar.GossipRound)
 	go TxNormalBlock(thisround - CacheDbRef.PrevHeight)
 	CacheDbRef.Release(TLG)

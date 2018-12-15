@@ -209,12 +209,12 @@ func HandleTxList(data []byte) error {
 	if err != nil {
 		return err
 	}
-	//fmt.Println(CacheDbRef.ID, "get TxList from", tmp.ID)
-	//fmt.Println("StropGetTx", CacheDbRef.StopGetTx, "TLRound:", CacheDbRef.TLRound, "tmpRound:", tmp.Round)
-	fmt.Println(time.Now(), CacheDbRef.ID, "gets a txlist with", tmp.TxCnt, "Txs", "Current round:", CacheDbRef.TLRound, "its round", tmp.Round, base58.Encode(tmp.HashID[:]))
 	if CacheDbRef.TLCheck[tmp.Round-CacheDbRef.PrevHeight] {
 		return nil
 	}
+	//fmt.Println(CacheDbRef.ID, "get TxList from", tmp.ID)
+	//fmt.Println("StropGetTx", CacheDbRef.StopGetTx, "TLRound:", CacheDbRef.TLRound, "tmpRound:", tmp.Round)
+	fmt.Println(time.Now(), CacheDbRef.ID, "gets a txlist with", tmp.TxCnt, "Txs", "Current round:", CacheDbRef.TLRound, "its round", tmp.Round, base58.Encode(tmp.HashID[:]))
 	CacheDbRef.TLCheck[tmp.Round-CacheDbRef.PrevHeight] = true
 	data2 := make([]byte, len(data))
 	tmp.Sender = CacheDbRef.ID
