@@ -49,8 +49,8 @@ func TxListProcess() {
 	CacheDbRef.BuildTDS()
 	TLG := CacheDbRef.Now
 	fmt.Println(time.Now(), CacheDbRef.ID, "sends a TxList with", TLG.TLS[CacheDbRef.ShardNum].TxCnt, "Txs, Hash:", base58.Encode(TLG.TLS[CacheDbRef.ShardNum].HashID[:]))
-	tmpStr := fmt.Sprintln("Shard", CacheDbRef.ShardNum, ":", CacheDbRef.ID, "sends a TxList with", TLG.TLS[CacheDbRef.ShardNum].TxCnt, "Txs Round", TLG.TLS[CacheDbRef.ShardNum].Round)
-	sendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
+	//tmpStr := fmt.Sprintln("Shard", CacheDbRef.ShardNum, ":", CacheDbRef.ID, "sends a TxList with", TLG.TLS[CacheDbRef.ShardNum].TxCnt, "Txs Round", TLG.TLS[CacheDbRef.ShardNum].Round)
+	//sendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
 
 	//CacheDbRef.TLS[CacheDbRef.ShardNum].Print()
 	data1 := new([]byte)
@@ -178,8 +178,8 @@ func TxNormalBlock(round uint32) {
 	CacheDbRef.Mu.Lock()
 	CacheDbRef.GenerateTxBlock(1)
 	fmt.Println(time.Now(), CacheDbRef.ID, "sends a TxBlock with", CacheDbRef.TxB.TxCnt, "Txs, Height:", CacheDbRef.TxB.Height)
-	tmpStr := fmt.Sprintln("Shard", CacheDbRef.ShardNum, ":", CacheDbRef.ID, "sends a TxBlock with", CacheDbRef.TxB.TxCnt, "Txs, Height:", CacheDbRef.TxB.Height)
-	sendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
+	//tmpStr := fmt.Sprintln("Shard", CacheDbRef.ShardNum, ":", CacheDbRef.ID, "sends a TxBlock with", CacheDbRef.TxB.TxCnt, "Txs, Height:", CacheDbRef.TxB.Height)
+	//sendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
 	/*if len(*CacheDbRef.TBCache) >= gVar.NumTxBlockForRep {
 		fmt.Println(CacheDbRef.ID, "start to make repBlock")
 		for i := CacheDbRef.TxB.Height - gVar.NumTxBlockForRep - CacheDbRef.PrevHeight; i < CacheDbRef.TxB.Height-CacheDbRef.PrevHeight; i++ {
@@ -226,7 +226,7 @@ func SendTxList(data []byte, level uint32) {
 		data2 := new([]byte)
 		tmp.Encode(data2)
 		xx := shard.ShardToGlobal[CacheDbRef.ShardNum][dest]
-		fmt.Println(time.Now(), CacheDbRef.ID, "Sends Txlist to ", xx)
+		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxList ", tmp.Round, " to ", xx, "Level: ", tmp.Level)
 		sendTxMessage(shard.GlobalGroupMems[xx].Address, "TxList", *data2)
 	}
 	/*for i := uint32(0); i < gVar.ShardSize; i++ {
@@ -253,7 +253,7 @@ func SendTxDecSetInShard(data []byte, round uint32, level uint32) {
 		data2 := new([]byte)
 		tmp.Encode(data2)
 		xx := shard.ShardToGlobal[CacheDbRef.ShardNum][dest]
-		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxDecSet to ", xx)
+		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxDecSet ", tmp.Round, " to ", xx, "Level: ", tmp.Level)
 		sendTxMessage(shard.GlobalGroupMems[xx].Address, "TxDecSetM", *data2)
 	}
 	/*for i := uint32(0); i < gVar.ShardSize; i++ {
@@ -314,7 +314,7 @@ func SendTxBlock(data *[]byte, kind int, level uint32) {
 		data2 := new([]byte)
 		tmp.Encode(data2, kind)
 		xx := shard.ShardToGlobal[CacheDbRef.ShardNum][dest]
-		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxB to ", xx)
+		fmt.Println(time.Now(), CacheDbRef.ID, "Sends TxB ", tmp.Height, " to ", xx, "Level: ", tmp.Level)
 		sendTxMessage(shard.GlobalGroupMems[xx].Address, "TxB", *data2)
 	}
 	/*for i := uint32(0); i < gVar.ShardSize; i++ {

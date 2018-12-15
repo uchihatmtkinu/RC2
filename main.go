@@ -89,7 +89,7 @@ func main() {
 
 		gVar.T1 = time.Now()
 		fmt.Println("This time", time.Now())
-		minute := 41
+		minute := 50
 		now := time.Now()
 		next := now.Add(0)
 		next = time.Date(next.Year(), next.Month(), next.Day(), next.Hour(), minute, 0, 0, next.Location())
@@ -127,8 +127,8 @@ func main() {
 	fmt.Println("Time: ", time.Since(timestart), "TPS:", float64(uint32(totalepoch)*(1+gVar.NumTxListPerEpoch*(gVar.ShardSize-1))*gVar.NumOfTxForTest)/time.Since(timestart).Seconds())
 	fmt.Println(network.CacheDbRef.ID, ": All finished")
 	if network.CacheDbRef.ID == 0 {
-		tmpStr := fmt.Sprint("All finished")
-		network.SendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
+		//tmpStr := fmt.Sprint("All finished")
+		//network.SendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
 	}
 	time.Sleep(20 * time.Second)
 

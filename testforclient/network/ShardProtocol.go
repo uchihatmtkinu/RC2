@@ -80,7 +80,7 @@ func ShardProcess() {
 		for i := uint32(0); i < gVar.ShardCnt*gVar.ShardSize; i++ {
 			tmpStr = tmpStr + fmt.Sprint(shard.GlobalGroupMems[i].CalTotalRep(), " ")
 		}
-		sendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
+		//sendTxMessage(gVar.MyAddress, "LogInfo", []byte(tmpStr))
 	}
 	if CurrentEpoch != -1 {
 		FinalTxReadyCh <- true
