@@ -3,9 +3,9 @@ package rccache
 import (
 	"fmt"
 
-	newrep "github.com/uchihatmtkinu/RC/NewRep"
-	"github.com/uchihatmtkinu/RC/gVar"
-	"github.com/uchihatmtkinu/RC/shard"
+	newrep "github.com/uchihatmtkinu/RC2/NewRep"
+	"github.com/uchihatmtkinu/RC2/gVar"
+	"github.com/uchihatmtkinu/RC2/shard"
 )
 
 //MakeRepMsg generate the newest RepMsg

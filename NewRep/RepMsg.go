@@ -4,7 +4,7 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 
-	"github.com/uchihatmtkinu/RC/basic"
+	"github.com/uchihatmtkinu/RC2/basic"
 )
 
 //GetHash return the hash of the reputation block

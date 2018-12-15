@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/gVar"
 )
 
 //Hash generates the 32bits hash of one Tx block

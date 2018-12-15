@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/uchihatmtkinu/RC/basic"
+	"github.com/uchihatmtkinu/RC2/basic"
 )
 
 type PrevOut struct {

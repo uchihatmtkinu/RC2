@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/uchihatmtkinu/RC/base58"
+	"github.com/uchihatmtkinu/RC2/base58"
 )
 
 //HashTx is come out the hash

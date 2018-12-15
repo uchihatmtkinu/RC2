@@ -1,8 +1,8 @@
 package rccache
 
 import (
-	"github.com/uchihatmtkinu/RC/basic"
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/basic"
+	"github.com/uchihatmtkinu/RC2/gVar"
 )
 
 //New initiate the TxDB struct

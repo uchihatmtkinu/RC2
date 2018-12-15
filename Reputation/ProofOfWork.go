@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/uchihatmtkinu/RC/shard"
+	"github.com/uchihatmtkinu/RC2/shard"
 )
 
 // ProofOfWork represents a proof-of-work

@@ -5,11 +5,11 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/basic"
-	"github.com/uchihatmtkinu/RC/gVar"
-	"github.com/uchihatmtkinu/RC/rccache"
-	"github.com/uchihatmtkinu/RC/shard"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/basic"
+	"github.com/uchihatmtkinu/RC2/gVar"
+	"github.com/uchihatmtkinu/RC2/rccache"
+	"github.com/uchihatmtkinu/RC2/shard"
 )
 
 //MinerLoop is the loop of miner

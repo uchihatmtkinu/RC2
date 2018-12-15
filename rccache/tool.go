@@ -3,8 +3,8 @@ package rccache
 import (
 	"fmt"
 
-	"github.com/uchihatmtkinu/RC/basic"
-	"github.com/uchihatmtkinu/RC/shard"
+	"github.com/uchihatmtkinu/RC2/basic"
+	"github.com/uchihatmtkinu/RC2/shard"
 )
 
 //UTXOSet is the set of utxo in database

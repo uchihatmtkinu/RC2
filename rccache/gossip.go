@@ -3,7 +3,7 @@ package rccache
 import (
 	"math/rand"
 
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/gVar"
 )
 
 //GetGossipID return the next ID of the gossip

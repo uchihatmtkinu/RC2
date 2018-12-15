@@ -5,8 +5,8 @@ import (
 
 	//"golang.org/x/crypto/ed25519"
 	//"golang.org/x/crypto/ed25519/cosi"
-	"github.com/uchihatmtkinu/RC/ed25519"
-	"github.com/uchihatmtkinu/RC/Reputation/cosi"
+	"github.com/uchihatmtkinu/RC2/ed25519"
+	"github.com/uchihatmtkinu/RC2/Reputation/cosi"
 	"bytes"
 )
 

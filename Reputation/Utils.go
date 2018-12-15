@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"log"
-	"github.com/uchihatmtkinu/RC/Reputation/cosi"
+	"github.com/uchihatmtkinu/RC2/Reputation/cosi"
 )
 
 

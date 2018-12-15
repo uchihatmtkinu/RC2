@@ -8,11 +8,11 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/gVar"
 
 	"github.com/boltdb/bolt"
-	"github.com/uchihatmtkinu/RC/basic"
+	"github.com/uchihatmtkinu/RC2/basic"
 )
 
 //TxBlockChain is the blockchain database

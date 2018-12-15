@@ -1,7 +1,7 @@
 package network
 
 import (
-	"github.com/uchihatmtkinu/RC/Reputation/cosi"
+	"github.com/uchihatmtkinu/RC2/Reputation/cosi"
 )
 
 //intilizeMaskBit set all the mas to disable

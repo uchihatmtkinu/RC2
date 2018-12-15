@@ -1,6 +1,6 @@
 package newrep
 
-import "github.com/uchihatmtkinu/RC/basic"
+import "github.com/uchihatmtkinu/RC2/basic"
 
 //NewRep is the new type of reptransaction
 type NewRep struct {

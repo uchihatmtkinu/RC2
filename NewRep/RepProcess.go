@@ -3,7 +3,7 @@ package newrep
 import (
 	"math"
 
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/gVar"
 )
 
 //RepMsgGen builds up a RegMsg data

@@ -245,8 +245,8 @@
 package cosi
 
 import (
-	"github.com/uchihatmtkinu/RC/ed25519/edwards25519"
-	"github.com/uchihatmtkinu/RC/ed25519"
+	"github.com/uchihatmtkinu/RC2/ed25519/edwards25519"
+	"github.com/uchihatmtkinu/RC2/ed25519"
 )
 
 

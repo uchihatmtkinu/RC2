@@ -5,7 +5,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 
-	"github.com/uchihatmtkinu/RC/base58"
+	"github.com/uchihatmtkinu/RC2/base58"
 )
 
 //Hash returns the ID of the TxList

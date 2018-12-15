@@ -3,7 +3,7 @@ package newrep
 import (
 	"fmt"
 
-	"github.com/uchihatmtkinu/RC/basic"
+	"github.com/uchihatmtkinu/RC2/basic"
 )
 
 //GossipFirMsgMake is to init a GossipFirMsg

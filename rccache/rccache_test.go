@@ -7,15 +7,15 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/uchihatmtkinu/RC/basic"
+	"github.com/uchihatmtkinu/RC2/basic"
 
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/cryptonew"
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/cryptonew"
+	"github.com/uchihatmtkinu/RC2/gVar"
 
-	"github.com/uchihatmtkinu/RC/shard"
+	"github.com/uchihatmtkinu/RC2/shard"
 
-	"github.com/uchihatmtkinu/RC/account"
+	"github.com/uchihatmtkinu/RC2/account"
 )
 
 func TestGeneratePriKey(t *testing.T) {

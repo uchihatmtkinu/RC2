@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/cryptonew"
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/cryptonew"
+	"github.com/uchihatmtkinu/RC2/gVar"
 )
 
 //Init initial the big.Int parameters

@@ -8,11 +8,11 @@ import (
 	"strings"
 	"sync"
 
-	newrep "github.com/uchihatmtkinu/RC/NewRep"
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/gVar"
+	newrep "github.com/uchihatmtkinu/RC2/NewRep"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/gVar"
 
-	"github.com/uchihatmtkinu/RC/basic"
+	"github.com/uchihatmtkinu/RC2/basic"
 )
 
 const dbFilex = "TxBlockchain.db"

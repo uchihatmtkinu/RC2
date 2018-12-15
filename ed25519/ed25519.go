@@ -16,7 +16,7 @@ import (
 	"errors"
 	"crypto/sha512"
 	cryptorand"crypto/rand"
-	"github.com/uchihatmtkinu/RC/ed25519/edwards25519"
+	"github.com/uchihatmtkinu/RC2/ed25519/edwards25519"
 	"strconv"
 	"crypto/subtle"
 )

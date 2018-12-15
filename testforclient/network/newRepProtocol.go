@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/uchihatmtkinu/RC/NewRep"
+	"github.com/uchihatmtkinu/RC2/NewRep"
 
-	"github.com/uchihatmtkinu/RC/gVar"
-	"github.com/uchihatmtkinu/RC/shard"
+	"github.com/uchihatmtkinu/RC2/gVar"
+	"github.com/uchihatmtkinu/RC2/shard"
 )
 
 //RepGossipLoop is the loop of New reputation protocol

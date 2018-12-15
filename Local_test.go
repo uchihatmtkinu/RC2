@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/uchihatmtkinu/RC/testforclient/network"
+	"github.com/uchihatmtkinu/RC2/testforclient/network"
 )
 
 func TestServer(t *testing.T) {

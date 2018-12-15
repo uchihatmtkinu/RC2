@@ -8,8 +8,8 @@ import (
 	"crypto/sha512"
 	"crypto/subtle"
 
-	"github.com/uchihatmtkinu/RC/ed25519"
-	"github.com/uchihatmtkinu/RC/ed25519/edwards25519"
+	"github.com/uchihatmtkinu/RC2/ed25519"
+	"github.com/uchihatmtkinu/RC2/ed25519/edwards25519"
 )
 
 // Policy represents a fully customizable cosigning policy

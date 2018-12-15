@@ -3,9 +3,9 @@ package shard
 import (
 	"fmt"
 
-	"github.com/uchihatmtkinu/RC/account"
-	"github.com/uchihatmtkinu/RC/ed25519"
-	"github.com/uchihatmtkinu/RC/gVar"
+	"github.com/uchihatmtkinu/RC2/account"
+	"github.com/uchihatmtkinu/RC2/ed25519"
+	"github.com/uchihatmtkinu/RC2/gVar"
 )
 
 //MemShard is the struct of miners for sharding and leader selection

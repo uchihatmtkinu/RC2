@@ -8,9 +8,9 @@ import (
 
 	"math/big"
 
-	"github.com/uchihatmtkinu/RC/base58"
-	"github.com/uchihatmtkinu/RC/cryptonew"
-	"github.com/uchihatmtkinu/RC/ed25519"
+	"github.com/uchihatmtkinu/RC2/base58"
+	"github.com/uchihatmtkinu/RC2/cryptonew"
+	"github.com/uchihatmtkinu/RC2/ed25519"
 )
 
 //RcAcc the wallet of a user1
