@@ -89,7 +89,7 @@ func main() {
 
 		gVar.T1 = time.Now()
 		fmt.Println("This time", time.Now())
-		minute := 13
+		minute := 27
 		now := time.Now()
 		next := now.Add(0)
 		next = time.Date(next.Year(), next.Month(), next.Day(), next.Hour(), minute, 0, 0, next.Location())
