@@ -253,7 +253,7 @@ func (d *DbRef) GetTDS(b *basic.TxDecSet, res *[gVar.ShardSize]int64) error {
 //GetTxBlock handle the txblock sent by the leader
 func (d *DbRef) GetTxBlock(a *basic.TxBlock) error {
 	d.RepVote[d.RepRound][a.Sender].Rep++
-	d.TBBCache[a.Height] = a
+	d.TBBCache[a.Height-1] = a
 	/*if a.Height != d.TxB.Height+1 {
 		return fmt.Errorf("Height not match")
 	}

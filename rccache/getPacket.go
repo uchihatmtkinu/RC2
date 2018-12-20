@@ -20,7 +20,7 @@ func (d *DbRef) PreTxList(b *basic.TxList, s *PreStat) error {
 		if d.Leader != b.ID {
 			return fmt.Errorf("PreTxList: Txlist from a miner")
 		}
-		if int(b.TxCnt) != len(b.TxArrayX) {
+		if int(b.TxCnt) != len(b.TxArray) {
 			return fmt.Errorf("PreTxList: Number of Tx wrong")
 		}
 		s.Stat = -1
@@ -120,10 +120,10 @@ func (d *DbRef) PreTxDecSet(b *basic.TxDecSet, s *PreStat) error {
 	}
 	if s.Stat == -2 {
 		if shard.GlobalGroupMems[b.ID].Role != 0 {
-			fmt.Println("PreTxDecSet: Not a Leader")
+			fmt.Println("PreTxDecSet: Not a Leader", b.ID)
 			return fmt.Errorf("PreTxDecSet: Not a Leader")
 		}
-		if int(b.TxCnt) != len(b.TxArrayX) || int(b.MemCnt) != len(b.MemD) {
+		if int(b.TxCnt) != len(b.TxArray) || int(b.MemCnt) != len(b.MemD) {
 			fmt.Println("PreTxDecSet: TxDecSet parameter not match")
 			return fmt.Errorf("PreTxDecSet: TxDecSet parameter not match")
 		}
@@ -199,7 +199,8 @@ func (d *DbRef) PreTxBlock(b *basic.TxBlock, s *PreStat) error {
 		if shard.GlobalGroupMems[b.ID].Role != 0 {
 			return fmt.Errorf("PreTxBlock: Not a Leader")
 		}
-		if int(b.TxCnt) != len(b.TxArrayX) {
+		if int(b.TxCnt) != len(b.TxArray) {
+			fmt.Println("Block TxCnt", b.TxCnt, "Block TxArray", len(b.TxArray))
 			return fmt.Errorf("PreTxBlock: TxBlock parameter not match")
 		}
 		s.Stat = -1

@@ -14,9 +14,10 @@ import (
 func RepGossipLoop(ms *[]shard.MemShard, minute int) {
 	now := time.Now()
 	next := now.Add(0)
-	next = time.Date(next.Year(), next.Month(), next.Day(), next.Hour(), minute, 0, 0, next.Location())
+	next = time.Date(next.Year(), next.Month(), next.Day(), next.Hour(), minute+1, 0, 0, next.Location())
 	tt := time.NewTimer(next.Sub(now))
 	<-tt.C
+	fmt.Println(time.Now(), "Start Gossip Rep")
 	for i := uint32(0); i < gVar.NumNewRep; i++ {
 		go NewRepProcess(ms, i)
 		time.Sleep(time.Second * 60)
@@ -27,7 +28,7 @@ func RepGossipLoop(ms *[]shard.MemShard, minute int) {
 
 //NewRepProcess with gossip
 func NewRepProcess(ms *[]shard.MemShard, round uint32) {
-	fmt.Println("RepProcess Round", round)
+	fmt.Println(time.Now(), "RepProcess Round", round)
 	for i := uint32(0); i < gVar.ShardSize; i++ {
 		CacheDbRef.RepByz[round][i] = false
 		CacheDbRef.RepFirSig[round][i] = false
@@ -36,18 +37,20 @@ func NewRepProcess(ms *[]shard.MemShard, round uint32) {
 	timeoutflag := true
 	for timeoutflag {
 		select {
-		case <-time.After(timeoutTxGap):
+		case <-time.After(time.Second):
 			CacheDbRef.Mu.Lock()
 			gFM, dest := CacheDbRef.GenerateGossipFir(round)
 			CacheDbRef.Mu.Unlock()
 			if gFM == nil {
 				break
 			}
+			fmt.Println(time.Now(), "Round", gFM.Data[0].Round, "GossipFirMsg to", dest)
+			gFM.Print()
 			data := new([]byte)
 			gFM.Encode(data)
 			go sendTxMessage(shard.GlobalGroupMems[dest].Address, "GossipFirSend", *data)
 		case <-time.After(timeoutNewRep):
-			fmt.Println("First NewRep Gossip reaches delay")
+			fmt.Println(time.Now(), "First NewRep Gossip reaches delay")
 			timeoutflag = false
 		}
 	}
@@ -82,14 +85,18 @@ func HandleGossipFirSend(data []byte) error {
 	data1 := make([]byte, len(data))
 	copy(data1, data)
 	tmp := new(newrep.GossipFirMsg)
+	fmt.Println("GossipFirMsg Data length:", len(data1))
 	err := tmp.Decode(&data1)
 	if err != nil {
 		fmt.Println("Error in decoding GossipFirSend", err)
 		return err
 	}
+	fmt.Println(time.Now(), "Get GossipFirMsg from", tmp.ID, "Round", tmp.Data[0].Round)
 	CacheDbRef.Mu.Lock()
 	tmpRev := CacheDbRef.UpdateGossipFir(*tmp)
 	CacheDbRef.Mu.Unlock()
+	fmt.Println(time.Now(), "Round", tmpRev.Data[0].Round, "GossipFirMsg Reply to", tmp.ID)
+	tmpRev.Print()
 	dataSend := new([]byte)
 	tmpRev.Encode(dataSend)
 	sendTxMessage(shard.GlobalGroupMems[tmp.ID].Address, "GossipFirRev", *dataSend)

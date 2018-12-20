@@ -96,7 +96,7 @@ func main() {
 		tt := time.NewTimer(next.Sub(now))
 		fmt.Println(next)
 		<-tt.C
-		//go network.RepGossipLoop(&shard.GlobalGroupMems, minute+1)
+		go network.RepGossipLoop(&shard.GlobalGroupMems, minute+1)
 		if shard.MyMenShard.Role == shard.RoleLeader {
 			fmt.Println("This is a Leader")
 			go network.TxGeneralLoop()

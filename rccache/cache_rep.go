@@ -5,7 +5,6 @@ import (
 
 	newrep "github.com/uchihatmtkinu/RC2/NewRep"
 	"github.com/uchihatmtkinu/RC2/gVar"
-	"github.com/uchihatmtkinu/RC2/shard"
 )
 
 //MakeRepMsg generate the newest RepMsg
@@ -23,7 +22,8 @@ func (d *DbRef) MakeRepMsg(round uint32) newrep.RepMsg {
 		}
 	}
 	mydata.Make(d.ID, *d.TBCache, tmpVote, round, &d.prk)
-	d.RepFirMsg[round][shard.MyMenShard.InShardId] = *mydata
+	d.RepFirMsg[round][d.ID] = *mydata
+	d.RepFirSig[round][d.ID] = true
 	return *mydata
 }
 
@@ -31,13 +31,14 @@ func (d *DbRef) MakeRepMsg(round uint32) newrep.RepMsg {
 func (d *DbRef) MakeRepSecMsg(round uint32, g newrep.GossipFirMsg) newrep.RepSecMsg {
 	mydata := new(newrep.RepSecMsg)
 	mydata.Make(d.ID, g, round, &d.prk)
-	d.RepSecMsg[round][shard.MyMenShard.InShardId] = *mydata
+	d.RepSecMsg[round][d.ID] = *mydata
+	d.RepSecSig[round][d.ID] = true
 	return *mydata
 }
 
 //GenerateGossipFir gives the data for gossip
 func (d *DbRef) GenerateGossipFir(round uint32) (*newrep.GossipFirMsg, int) {
-	if d.RepFirMsg[round][shard.MyMenShard.InShardId].ID == 0 {
+	if d.RepFirMsg[round][d.ID].ID == 0 {
 		d.MakeRepMsg(round)
 	}
 	tmp := new(newrep.GossipFirMsg)
@@ -56,7 +57,7 @@ func (d *DbRef) GenerateGossipFir(round uint32) (*newrep.GossipFirMsg, int) {
 	}
 	if cnt > 0 {
 		ran := d.GetGossipID(1, tmpArr)
-		return tmp, shard.ShardToGlobal[d.ShardNum][ran]
+		return tmp, int(ran)
 	}
 	return nil, 0
 
@@ -90,13 +91,14 @@ func (d *DbRef) GenerateGossipSec(round uint32) (*newrep.GossipSecMsg, int) {
 	}
 	if cnt > 0 {
 		ran := d.GetGossipID(1, tmpArr)
-		return tmp, shard.ShardToGlobal[d.ShardNum][ran]
+		return tmp, int(ran)
 	}
 	return nil, 0
 }
 
 //UpdateGossipFir with the incoming data
 func (d *DbRef) UpdateGossipFir(data newrep.GossipFirMsg) newrep.GossipFirMsg {
+	fmt.Println("Update gossip")
 	d.RepVote[d.RepRound][data.ID].Rep++
 	tmpRound := data.Data[0].Round
 	tmp := new(newrep.GossipFirMsg)
@@ -112,7 +114,7 @@ func (d *DbRef) UpdateGossipFir(data newrep.GossipFirMsg) newrep.GossipFirMsg {
 		tmpArr[i] = d.RepFirSig[tmpRound][i]
 	}
 	for i := uint32(0); i < data.Cnt; i++ {
-		tmpInShardID := shard.GlobalGroupMems[data.Data[i].ID].InShardId
+		tmpInShardID := data.Data[i].ID
 		tmpArr[tmpInShardID] = false
 		if d.RepFirSig[tmpRound][tmpInShardID] {
 			if d.RepFirMsg[tmpRound][tmpInShardID].Hash() != data.Data[i].Hash() {
@@ -149,7 +151,7 @@ func (d *DbRef) UpdateGossipSec(data newrep.GossipSecMsg) newrep.GossipSecMsg {
 		tmpArr[i] = d.RepSecSig[tmpRound][i]
 	}
 	for i := uint32(0); i < data.Cnt; i++ {
-		tmpInShardID := shard.GlobalGroupMems[data.Data[i].ID].InShardId
+		tmpInShardID := data.Data[i].ID
 		tmpArr[tmpInShardID] = false
 		if !d.RepSecSig[tmpRound][tmpInShardID] {
 			d.RepSecSig[tmpRound][tmpInShardID] = true

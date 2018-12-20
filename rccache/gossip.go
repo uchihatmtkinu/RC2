@@ -9,6 +9,7 @@ import (
 //GetGossipID return the next ID of the gossip
 func (a *DbRef) GetGossipID(kind int, tmparr []uint32) uint32 {
 	can := make([]uint32, 0, gVar.ShardSize)
+	a.GossipPool[a.ID] = 10000000
 	if kind == 0 {
 		least := a.GossipPool[0]
 		for i := uint32(0); i < gVar.ShardSize; i++ {

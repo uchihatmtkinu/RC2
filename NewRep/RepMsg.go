@@ -206,3 +206,22 @@ func (a *RepSecMsg) Make(id uint32, g GossipFirMsg, round uint32, prikey *ecdsa.
 	tmp := a.Hash()
 	a.Sig.Sign(tmp[:], prikey)
 }
+
+//Print outputs
+func (a *RepMsg) Print() {
+	fmt.Println("ID:", a.ID, "NumTB:", a.NumTB, "NumVote", a.NumVote, "Round:", a.Round)
+	for i := 0; i < len(a.Vote); i++ {
+		fmt.Print(a.Vote[i].ID, ":", a.Vote[i].Rep, ";")
+	}
+	fmt.Println()
+}
+
+//Print outputs
+func (a *GossipFirMsg) Print() {
+	fmt.Println("-------Gossip Fir Msg")
+	fmt.Println("ID:", a.ID, "Cnt", a.Cnt)
+	for i := 0; i < len(a.Data); i++ {
+		a.Data[i].Print()
+	}
+	fmt.Println("----------------")
+}

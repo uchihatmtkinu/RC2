@@ -57,6 +57,7 @@ func (a *GossipFirMsg) Decode(buf *[]byte) error {
 	if err != nil {
 		return fmt.Errorf("GossipFirMsg Cnt decode failed: %s", err)
 	}
+	a.Data = make([]RepMsg, a.Cnt)
 	for i := uint32(0); i < a.Cnt; i++ {
 		err = a.Data[i].Decode(buf)
 		if err != nil {

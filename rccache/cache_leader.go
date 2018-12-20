@@ -132,7 +132,6 @@ func (d *DbRef) NewTxList() error {
 		d.Now.TLS[i].ID = d.ID
 		d.Now.TLS[i].Round = d.TLRound
 	}
-
 	return nil
 }
 
@@ -247,90 +246,17 @@ func (d *DbRef) UpdateTXCache(a *basic.TxDecision, index *uint32) error {
 //ProcessTDS deal with the TDS
 func (d *DbRef) ProcessTDS(b *basic.TxDecSet, res *[gVar.ShardSize]int64) {
 	if b.ShardIndex == d.ShardNum {
-		tmp1, _ := d.TLIndex[b.HashID]
+		//tmp1, _ := d.TLIndex[b.HashID]
 		//tmpIndex := tmp - uint32(d.StartIndex)
 		//tmpTL := (*d.TLSCache[tmpIndex])[d.ShardNum]
-		b.TxCnt = tmp1.TLS[d.ShardNum].TxCnt
-		b.TxArray = tmp1.TLS[d.ShardNum].TxArray
-		index := 0
-		shift := byte(0)
+		//b.TxCnt = tmp1.TLS[d.ShardNum].TxCnt
+		//b.TxArray = tmp1.TLS[d.ShardNum].TxArray
 		x := shard.ReturnRepData(0)
 		for i := 0; i < len(*x); i++ {
 			fmt.Print((*x)[i], " ")
 		}
 		fmt.Println()
-		for i := uint32(0); i < b.TxCnt; i++ {
-			tmp, ok2 := d.TXCache[b.TxArray[i]]
-			for j := uint32(0); j < b.MemCnt; j++ {
-				tmp.Decision[shard.GlobalGroupMems[b.MemD[j].ID].InShardId] = (b.MemD[j].Decision[index]>>shift)&1 + 1
-			}
-			tmp.Value = 1
-			tmpRes := b.Result(i)
-			if tmpRes == false {
-				if !ok2 {
-					fmt.Println("Whats the fuck?")
-				}
-				tmp.Decision[0] = 1
-				for j := uint32(0); j < gVar.ShardSize; j++ {
-					if tmp.Decision[j] == 1 {
-						//shard.GlobalGroupMems[shard.ShardToGlobal[d.ShardNum][j]].Rep += gVar.RepTN * int64(tmp.Value)
-						(*res)[j] += gVar.RepTN * int64(tmp.Value)
-					} else if tmp.Decision[j] == 2 {
-						//shard.GlobalGroupMems[shard.ShardToGlobal[d.ShardNum][j]].Rep -= gVar.RepFP * int64(tmp.Value)
-						(*res)[j] -= gVar.RepFP * int64(tmp.Value)
-					}
-				}
-			} else {
-				tmp.Decision[0] = 2
-				for j := uint32(0); j < gVar.ShardSize; j++ {
-					if tmp.Decision[j] == 1 {
-						//shard.GlobalGroupMems[shard.ShardToGlobal[d.ShardNum][j]].Rep -= gVar.RepFN * int64(tmp.Value)
-						(*res)[j] -= gVar.RepFN * int64(tmp.Value)
-					} else if tmp.Decision[j] == 2 {
-						//shard.GlobalGroupMems[shard.ShardToGlobal[d.ShardNum][j]].Rep += gVar.RepTP * int64(tmp.Value)
-						(*res)[j] += gVar.RepTP * int64(tmp.Value)
-					}
-				}
-			}
-			if shift < 7 {
-				shift++
-			} else {
-				index++
-				shift = 0
-			}
-			d.TXCache[b.TxArray[i]] = tmp
-		}
 	}
-
-	/*for i := uint32(0); i < b.TxCnt; i++ {
-		tmpHash := b.TxArray[i]
-		tmp, ok := d.TXCache[tmpHash]
-		//fmt.Println(tmp.InCheck, " ", tmp.InCheckSum)
-		if !ok {
-			tmp = new(CrossShardDec)
-
-			tmp.NewFromOther(b.ShardIndex, b.Result(i))
-			d.TXCache[tmpHash] = tmp
-		} else {
-			//tmp.Print()
-			//fmt.Println("result: ", b.Result(i))
-			tmp.UpdateFromOther(b.ShardIndex, b.Result(i))
-			//fmt.Println(base58.Encode(tmp.Data.Hash[:]), "result is", tmp.Res)
-			if tmp.Res == 1 {
-				d.Ready = append(d.Ready, *(tmp.Data))
-			}
-			if tmp.Total == 0 {
-				delete(d.HashCache, basic.HashCut(tmpHash))
-				delete(d.TXCache, tmpHash)
-			} else {
-				d.TXCache[tmpHash] = tmp
-			}
-		}
-	}
-	if b.ShardIndex == d.ShardNum {
-		b.TxCnt = 0
-		b.TxArray = nil
-	}*/
 }
 
 //Release delete the first element of the cache

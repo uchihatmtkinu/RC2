@@ -69,7 +69,7 @@ func IntilizeProcess(input string, ID *int, PriIPFile string, initType int) {
 		accWallet[i].Value = 100000000
 	}
 	IPCnt := int(numCnt)
-	if initType != 0 {
+	if initType > 0 {
 		IPCnt /= 2
 	}
 	//tmp, _ := x509.MarshalECPrivateKey(&acc[i].Pri)
@@ -77,8 +77,10 @@ func IntilizeProcess(input string, ID *int, PriIPFile string, initType int) {
 	for i := 0; i < int(IPCnt); i++ {
 		scannerPri.Scan()
 		IPAddrPri = scannerPri.Text()
-
 		IPAddr1 := IPAddrPri + ":" + strconv.Itoa(3000+i)
+		if initType < 0 {
+			IPAddr1 = IPAddrPri
+		}
 		var band int
 		if gVar.BandDiverse {
 			band = gVar.MinBand + (gVar.MaxBand-gVar.MinBand)*(i+1)/int(numCnt)
@@ -88,7 +90,7 @@ func IntilizeProcess(input string, ID *int, PriIPFile string, initType int) {
 		shard.GlobalGroupMems[i].NewMemShard(&acc[i], IPAddr1, band)
 		shard.GlobalGroupMems[i].NewTotalRep()
 		//shard.GlobalGroupMems[i].AddRep(int64(i))
-		if initType != 0 {
+		if initType > 0 {
 			IPAddr1 := IPAddrPri + ":" + strconv.Itoa(3000+i+IPCnt)
 			if gVar.BandDiverse {
 				band = gVar.MinBand + (gVar.MaxBand-gVar.MinBand)*(i+1+IPCnt)/int(numCnt)
@@ -106,7 +108,11 @@ func IntilizeProcess(input string, ID *int, PriIPFile string, initType int) {
 				MyGlobalID += IPCnt
 				*ID += IPCnt
 			}
-			bindAddress = IPAddrPri + ":" + strconv.Itoa(3000+MyGlobalID)
+			if initType < 0 {
+				bindAddress = IPAddrPri
+			} else {
+				bindAddress = IPAddrPri + ":" + strconv.Itoa(3000+MyGlobalID)
+			}
 		}
 		//map ip+port -> global ID
 		//GlobalAddrMapToInd[IPAddr] = i
