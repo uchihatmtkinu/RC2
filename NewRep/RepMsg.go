@@ -225,3 +225,14 @@ func (a *GossipFirMsg) Print() {
 	}
 	fmt.Println("----------------")
 }
+
+//Print outputs
+func (a *GossipSecMsg) Print() {
+	fmt.Println("-------Gossip Sec Msg")
+	fmt.Println("ID:", a.ID, "Cnt", a.Cnt)
+	for i := 0; i < len(a.Data); i++ {
+		fmt.Println(a.Data[i].ID, ":", len(a.Data[i].MsgHash))
+	}
+	fmt.Println()
+	fmt.Println("----------------")
+}

@@ -19,7 +19,9 @@ func GossipFirMsgMake(data RepMsg) GossipFirMsg {
 //Add adds a new RepMsg
 func (a *GossipFirMsg) Add(data RepMsg) {
 	a.Cnt++
-	a.Data = append(a.Data, data)
+	tmp := new(RepMsg)
+	*tmp = data
+	a.Data = append(a.Data, *tmp)
 }
 
 //GossipSecMsgMake is to init a GossipSecMsg
@@ -89,6 +91,7 @@ func (a *GossipSecMsg) Decode(buf *[]byte) error {
 	if err != nil {
 		return fmt.Errorf("GossipSecMsg Cnt Read failed: %s", err)
 	}
+	a.Data = make([]RepSecMsg, a.Cnt)
 	for i := uint32(0); i < a.Cnt; i++ {
 		err = a.Data[i].Decode(buf)
 		if err != nil {

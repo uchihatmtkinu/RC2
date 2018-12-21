@@ -38,7 +38,7 @@ func (d *DbRef) MakeRepSecMsg(round uint32, g newrep.GossipFirMsg) newrep.RepSec
 
 //GenerateGossipFir gives the data for gossip
 func (d *DbRef) GenerateGossipFir(round uint32) (*newrep.GossipFirMsg, int) {
-	if d.RepFirMsg[round][d.ID].ID == 0 {
+	if d.RepFirSig[round][d.ID] == false {
 		d.MakeRepMsg(round)
 	}
 	tmp := new(newrep.GossipFirMsg)
@@ -65,16 +65,19 @@ func (d *DbRef) GenerateGossipFir(round uint32) (*newrep.GossipFirMsg, int) {
 
 //GenerateGossipSec gives the data for gossip
 func (d *DbRef) GenerateGossipSec(round uint32) (*newrep.GossipSecMsg, int) {
-	tmpGossip := new(newrep.GossipFirMsg)
-	tmpGossip.ID = d.ID
-	tmpGossip.Cnt = 0
-	tmpGossip.Data = nil
-	for i := uint32(0); i < gVar.ShardSize; i++ {
-		if d.RepFirSig[round][i] {
-			tmpGossip.Add(d.RepFirMsg[round][i])
+	if d.RepSecSig[round][d.ID] == false {
+		tmpGossip := new(newrep.GossipFirMsg)
+		tmpGossip.ID = d.ID
+		tmpGossip.Cnt = 0
+		tmpGossip.Data = nil
+		for i := uint32(0); i < gVar.ShardSize; i++ {
+			if d.RepFirSig[round][i] {
+				tmpGossip.Add(d.RepFirMsg[round][i])
+			}
 		}
+		d.MakeRepSecMsg(round, *tmpGossip)
 	}
-	d.MakeRepSecMsg(round, *tmpGossip)
+
 	tmp := new(newrep.GossipSecMsg)
 	tmp.ID = d.ID
 	tmp.Cnt = 0
@@ -98,7 +101,6 @@ func (d *DbRef) GenerateGossipSec(round uint32) (*newrep.GossipSecMsg, int) {
 
 //UpdateGossipFir with the incoming data
 func (d *DbRef) UpdateGossipFir(data newrep.GossipFirMsg) newrep.GossipFirMsg {
-	fmt.Println("Update gossip")
 	d.RepVote[d.RepRound][data.ID].Rep++
 	tmpRound := data.Data[0].Round
 	tmp := new(newrep.GossipFirMsg)
@@ -108,6 +110,9 @@ func (d *DbRef) UpdateGossipFir(data newrep.GossipFirMsg) newrep.GossipFirMsg {
 	if tmpRound > gVar.NumNewRep {
 		fmt.Println("Data round over limit")
 		return *tmp
+	}
+	if d.RepFirSig[tmpRound][d.ID] == false {
+		d.MakeRepMsg(tmpRound)
 	}
 	tmpArr := make([]bool, gVar.ShardSize)
 	for i := uint32(0); i < gVar.ShardSize; i++ {
@@ -125,16 +130,18 @@ func (d *DbRef) UpdateGossipFir(data newrep.GossipFirMsg) newrep.GossipFirMsg {
 			d.RepFirMsg[tmpRound][tmpInShardID] = data.Data[i]
 		}
 	}
-	for i := uint32(0); i < data.Cnt; i++ {
+
+	for i := uint32(0); i < gVar.ShardSize; i++ {
 		if tmpArr[i] {
 			tmp.Add(d.RepFirMsg[tmpRound][i])
 		}
 	}
+	//tmp.Print()
 	return *tmp
 }
 
 //UpdateGossipSec with the incoming data
-func (d *DbRef) UpdateGossipSec(data newrep.GossipSecMsg) newrep.GossipSecMsg {
+func (d *DbRef) UpdateGossipSec(data newrep.GossipSecMsg) (newrep.GossipSecMsg, int) {
 	d.RepVote[d.RepRound][data.ID].Rep++
 	tmpRound := data.Data[0].Round
 	tmp := new(newrep.GossipSecMsg)
@@ -143,7 +150,7 @@ func (d *DbRef) UpdateGossipSec(data newrep.GossipSecMsg) newrep.GossipSecMsg {
 	tmp.Data = nil
 	if tmpRound > gVar.NumNewRep {
 		fmt.Println("Data round over limit")
-		return *tmp
+		return *tmp, -1
 	}
 
 	tmpArr := make([]bool, gVar.ShardSize)
@@ -158,12 +165,16 @@ func (d *DbRef) UpdateGossipSec(data newrep.GossipSecMsg) newrep.GossipSecMsg {
 			d.RepSecMsg[tmpRound][tmpInShardID] = data.Data[i]
 		}
 	}
-	for i := uint32(0); i < data.Cnt; i++ {
+	for i := uint32(0); i < gVar.ShardSize; i++ {
 		if tmpArr[i] {
 			tmp.Add(d.RepSecMsg[tmpRound][i])
 		}
 	}
-	return *tmp
+	state := 0
+	if tmpArr[d.ID] {
+		state = 1
+	}
+	return *tmp, state
 }
 
 //GetRepBlock gives the reputation block

@@ -1,6 +1,7 @@
 package newrep
 
 import (
+	"fmt"
 	"math"
 
 	"github.com/uchihatmtkinu/RC2/gVar"
@@ -19,9 +20,11 @@ func RepBlockMake(data []RepMsg, input []RepSecMsg, prevHash [32]byte) *RepBlock
 	var repvote [gVar.ShardSize]float64
 	weight := make([]float64, gVar.ShardSize)
 	tmp.TBHash = nil
-	TBCache := make([][32]byte, 0, len(data[0].TBHash))
-	var mapCache map[[32]byte]uint32
+	TBCache := make([][32]byte, 0)
+	var mapCache map[[32]byte]int
+	mapCache = make(map[[32]byte]int, 1000)
 	for i := 0; i < len(data); i++ {
+		fmt.Println(i, ": ", data[i].Vote)
 		for j := 0; j < len(data[i].TBHash); j++ {
 			tmpHash := data[i].TBHash[j]
 			test, ok := mapCache[tmpHash]
@@ -34,7 +37,7 @@ func RepBlockMake(data []RepMsg, input []RepSecMsg, prevHash [32]byte) *RepBlock
 		}
 	}
 	for i := 0; i < len(TBCache); i++ {
-		if mapCache[TBCache[i]] > gVar.ShardSize/2 {
+		if uint32(mapCache[TBCache[i]]) > gVar.ShardSize/2 {
 			tmp.TBHash = append(tmp.TBHash, TBCache[i])
 		}
 	}
@@ -60,6 +63,9 @@ func RepBlockMake(data []RepMsg, input []RepSecMsg, prevHash [32]byte) *RepBlock
 	for i := 0; i < len(data); i++ {
 		weight[data[i].ID] = totalweight - weight[data[i].ID]
 		totalweight2 = totalweight2 + weight[data[i].ID]
+	}
+	if totalweight2 == 0 {
+		totalweight2 = 1
 	}
 	for i := 0; i < len(data); i++ {
 		weight[data[i].ID] = weight[data[i].ID] / totalweight2
