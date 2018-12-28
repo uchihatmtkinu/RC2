@@ -65,6 +65,11 @@ func main() {
 
 	time.Sleep(time.Second * 20)
 	timestart := time.Now()
+	timeMinute, timeErr := strconv.Atoi(os.Args[4])
+	if timeErr != nil {
+		log.Panic(initErr)
+		os.Exit(1)
+	}
 	fmt.Println(time.Now(), "test begin")
 	//network.StopChan = make(chan os.Signal, 1)
 	for k := 1; k <= totalepoch; k++ {
@@ -89,7 +94,7 @@ func main() {
 
 		gVar.T1 = time.Now()
 		fmt.Println("This time", time.Now())
-		minute := 50
+		minute := timeMinute
 		now := time.Now()
 		next := now.Add(0)
 		next = time.Date(next.Year(), next.Month(), next.Day(), next.Hour(), minute, 0, 0, next.Location())
